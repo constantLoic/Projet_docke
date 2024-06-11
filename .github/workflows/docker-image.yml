@@ -24,18 +24,30 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Étape 3 : Extraction des métadonnées pour Docker (tags, labels)
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: thetips4you/testjodejsapp
+      # Étape 3 : Construction de l'image Docker en utilisant Docker Compose
+      - name: Construction de l'image Docker
+        run: docker-compose build
 
-      # Étape 4 : Construction et push de l'image Docker vers Docker Hub
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+      # Étape 4 : Pousser l'image Docker vers Docker Hub
+      - name: Push de l'image Docker
+        run: |
+          IMAGE_TAG=$(docker-compose config | grep image: | awk '{print $2}')
+          docker tag $IMAGE_TAG $IMAGE_TAG:latest
+          docker push $IMAGE_TAG
+
+
+      # # Étape 3 : Extraction des métadonnées pour Docker (tags, labels)
+      # - name: Extract metadata (tags, labels) for Docker
+      #   id: meta
+      #   uses: docker/metadata-action@v4
+      #   with:
+      #     images: thetips4you/testjodejsapp
+
+      # # Étape 4 : Construction et push de l'image Docker vers Docker Hub
+      # - name: Build and push Docker image
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     context: .
+      #     push: true
+      #     tags: ${{ steps.meta.outputs.tags }}
+      #     labels: ${{ steps.meta.outputs.labels }}
