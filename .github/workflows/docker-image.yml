@@ -28,16 +28,26 @@ jobs:
       - name: Construction de l'image Docker
         run: docker-compose build
 
-     # Étape 4 : Extraction du tag de l'image depuis le fichier docker-compose.yml
-      - name: Extraction du tag de l'image
-        id: extract_image_tag
-        run: echo "IMAGE_TAG=$(docker-compose config | grep 'image:' | awk '{print $2}')" >> $GITHUB_ENV
-
-      # Étape 5 : Pousser l'image Docker vers Docker Hub
-      - name: Push de l'image Docker
+      # Étape 4 : Extraction et push des tags des images
+      - name: Extraction et push des tags des images
         run: |
-          docker tag ${{ env.IMAGE_TAG }} ${{ env.IMAGE_TAG }}:latest
-          docker push ${{ env.IMAGE_TAG }}:latest
+          # Extraire les tags des images depuis le fichier docker-compose.yml
+          backend_image=$(docker-compose config | grep 'image:' | grep 'spm-backend' | awk '{print $2}')
+          frontend_image=$(docker-compose config | grep 'image:' | grep 'spm-frontend' | awk '{print $2}')
+
+          echo "Backend Image: $backend_image"
+          echo "Frontend Image: $frontend_image"
+
+          # Tag et push des images vers Docker Hub
+          if [ -n "$backend_image" ]; then
+            docker tag $backend_image $backend_image:latest
+            docker push $backend_image:latest
+          fi
+
+          if [ -n "$frontend_image" ]; then
+            docker tag $frontend_image $frontend_image:latest
+            docker push $frontend_image:latest
+          fi
 
 
       # # Étape 3 : Extraction des métadonnées pour Docker (tags, labels)
