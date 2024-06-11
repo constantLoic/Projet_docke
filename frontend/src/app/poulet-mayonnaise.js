@@ -18,7 +18,7 @@ titre.innerHTML = `Menu du ${new Date().toLocaleDateString("fr-FR", {
 })}`;
 
 api.getEntreesDuJour().then((json) => {
-  const sibling = document.querySelector(".grosse-dalle");
+  const sibling = document.querySelector(".grosse-dale");
   const parentElm = document.createElement("itv-plat");
   parentElm.classList.add(["grosse-dalle"]);
   json.forEach((row) => {
