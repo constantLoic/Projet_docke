@@ -28,7 +28,7 @@ jobs:
       - name: Construction de l'image Docker
         run: docker-compose build
 
-      # Étape 4 : Extraction et push des tags des images
+        # Étape 4 : Extraction et push des tags des images
       - name: Extraction et push des tags des images
         run: |
           # Extraire les tags des images depuis le fichier docker-compose.yml
