@@ -1,17 +1,15 @@
 # Fullstack with Docker
 
-Ce dépôt contient le code source relatif à l'épisode 21 de notre chaîne [inpulse.tv](https://www.inpulse.tv) dédié à la dockerisation et au déploiement d'image docker :
-- [CONTENEURISE ton APP avec DOCKER - #2](https://www.youtube.com/watch?v=MIxyr43FmIU)
+Ce dépôt contient le code source du projet Fullstack with Docker dédié à la dockerisation et au déploiement d'image docker 
 
-Il contient le code source permettant de réaliser et suivre le tutoriel de la vidéo.
 
 Le contenu se partage en deux projets contenant chacun un Dockerfile:
 - Un dossier ``backend`` proposant une API sous .NET 
-- Un dossier ``frontend`` contenant une application Web basée sur celle proposée depuis le site [sandwichpouletmayonnaise.com](https://sandwichpouletmayonnaise.com/)
+- Un dossier ``frontend`` contenant une application Web basée sur celle proposée depuis le site [sandwichpouletmayonnaise.com]
 
 Vous trouverez aussi deux fichiers `compose` pour pouvoir démarrer l'ensemble des conteneurs nécessaires
 
-Pour comprendre le contenu de chaque projet il vous suffit de suivre les instructions de l'épisode sur notre chaîne [inpulse.tv](https://www.inpulse.tv).
+Pour comprendre le contenu de chaque projet il vous suffit de suivre les etapes 
 
 ## Installation
 
@@ -36,6 +34,6 @@ docker exec -it --env MYSQL_PWD=password pouletmayo-db-1 bash -c "mysql -u root 
 Vous aurez une API consultable en local sur le port 8000 via l'URL : http://localhost:8000.
 L'API ne propose qu'un seul endpoint : [``api/entreesdujour``](http://localhost:8000/api/entreesdujour)
 
-Un site web sera également lancé dans votre navigateur via l'adresse : http://localhost:9000 (Ne nous tenez pas rigueur du design 😃 )
+Un site web sera également lancé dans votre navigateur via l'adresse : http://localhost:9000 
 
-Bonne installation et à bientôt sur [inpulse.tv](https://www.inpulse.tv).
+Bonne installation et à bientôt. 
