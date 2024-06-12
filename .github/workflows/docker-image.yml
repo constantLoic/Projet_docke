@@ -24,31 +24,23 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Étape 3 : Construction de l'image Docker en utilisant Docker Compose
-      - name: Construction de l'image Docker
+      # Étape 3 : Construction de l'image backend
+      - name: Construction de l'image backend
         run: |
-          docker-compose build -t 'spm-backend'
-          docker-compose build -t 'spm-frontend'
+          docker build -t spm-backend ./backend
 
-        # Étape 4 : Extraction et push des tags des images
-      - name: Extraction et push des tags des images
+      # Étape 4 : Construction de l'image frontend
+      - name: Construction de l'image frontend
         run: |
-          # Extraire les tags des images depuis le fichier docker-compose.yml
-          echo docker-compose config
-          frontend_image=$(docker-compose config | grep 'image:' | grep 'spm-frontend' | awk '{print $2}')
-          backend_image=$(docker-compose config | grep 'image:' | grep 'spm-backend' | awk '{print $2}')
+          docker build -t spm-frontend ./frontend
 
-          echo "Frontend Image: $frontend_image"         
-          echo "Backend Image: $backend_image"
+      # Étape 5 : Tag et push des images vers Docker Hub
+      - name: Tag et push des images vers Docker Hub
+        run: |
+          # Taguer les images
+          docker tag spm-backend ${{ secrets.DOCKER_USERNAME }}/spm-backend:latest
+          docker tag spm-frontend ${{ secrets.DOCKER_USERNAME }}/spm-frontend:latest
 
-          # Tag et push des images vers Docker Hub
-          if [ -n "$backend_image" ]; then
-            docker push $backend_image:latest
-          fi
-
-          if [ -n "$frontend_image" ]; then
-            docker push $frontend_image:latest
-          fi
-
-
- 
+          # Pousser les images vers Docker Hub
+          docker push ${{ secrets.DOCKER_USERNAME }}/spm-backend:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/spm-frontend:latest
