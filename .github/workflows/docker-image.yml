@@ -26,8 +26,9 @@ jobs:
 
       # Étape 3 : Construction de l'image Docker en utilisant Docker Compose
       - name: Construction de l'image Docker
-        run: docker-compose build -t 'spm-backend'
-             docker-compose build -t 'spm-frontend'
+        run: |
+          docker-compose build -t 'spm-backend'
+          docker-compose build -t 'spm-frontend'
 
         # Étape 4 : Extraction et push des tags des images
       - name: Extraction et push des tags des images
