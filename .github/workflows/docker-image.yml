@@ -32,6 +32,7 @@ jobs:
       - name: Extraction et push des tags des images
         run: |
           # Extraire les tags des images depuis le fichier docker-compose.yml
+          echo docker-compose config
           backend_image=$(docker-compose config | grep 'image:' | grep 'spm-backend' | awk '{print $2}')
           frontend_image=$(docker-compose config | grep 'image:' | grep 'spm-frontend' | awk '{print $2}')
 
