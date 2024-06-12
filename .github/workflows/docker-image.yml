@@ -26,18 +26,19 @@ jobs:
 
       # Étape 3 : Construction de l'image Docker en utilisant Docker Compose
       - name: Construction de l'image Docker
-        run: docker-compose build
+        run: docker-compose build -t 'spm-backend'
+             docker-compose build -t 'spm-frontend'
 
         # Étape 4 : Extraction et push des tags des images
       - name: Extraction et push des tags des images
         run: |
           # Extraire les tags des images depuis le fichier docker-compose.yml
           echo docker-compose config
-          backend_image=$(docker-compose config | grep 'image:' | grep 'spm-backend' | awk '{print $2}')
           frontend_image=$(docker-compose config | grep 'image:' | grep 'spm-frontend' | awk '{print $2}')
+          backend_image=$(docker-compose config | grep 'image:' | grep 'spm-backend' | awk '{print $2}')
 
+          echo "Frontend Image: $frontend_image"         
           echo "Backend Image: $backend_image"
-          echo "Frontend Image: $frontend_image"
 
           # Tag et push des images vers Docker Hub
           if [ -n "$backend_image" ]; then
@@ -49,18 +50,4 @@ jobs:
           fi
 
 
-      # # Étape 3 : Extraction des métadonnées pour Docker (tags, labels)
-      # - name: Extract metadata (tags, labels) for Docker
-      #   id: meta
-      #   uses: docker/metadata-action@v4
-      #   with:
-      #     images: thetips4you/testjodejsapp
-
-      # # Étape 4 : Construction et push de l'image Docker vers Docker Hub
-      # - name: Build and push Docker image
-      #   uses: docker/build-push-action@v4
-      #   with:
-      #     context: .
-      #     push: true
-      #     tags: ${{ steps.meta.outputs.tags }}
-      #     labels: ${{ steps.meta.outputs.labels }}
+ 
