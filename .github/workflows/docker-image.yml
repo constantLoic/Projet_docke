@@ -41,12 +41,10 @@ jobs:
 
           # Tag et push des images vers Docker Hub
           if [ -n "$backend_image" ]; then
-            docker tag $backend_image $backend_image:latest
             docker push $backend_image:latest
           fi
 
           if [ -n "$frontend_image" ]; then
-            docker tag $frontend_image $frontend_image:latest
             docker push $frontend_image:latest
           fi
 
