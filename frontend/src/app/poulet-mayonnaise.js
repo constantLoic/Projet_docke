@@ -38,16 +38,7 @@ api.getEntreesDuJour().then((json) => {
   photoBackground("pas vegan");
 });
 
-/*
-window.addEventListener("load", function(event) {
-	console.log("Toutes les ressources sont chargées !");
 
-	var itvoption = document.getElementById("OptionVegan");
-	itvoption.onclick = helloVegan;
-});
-*/
-
-/* ICI NOS FONCTIONS HELPERS */
 
 function changePrix(nouveauPrix) {
   var lesTagsPrix = document.getElementsByTagName("itv-prix");
